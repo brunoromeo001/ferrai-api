@@ -4,7 +4,7 @@
   "port": "3306",
   "username": "root",
   "password": "",
-  "database": "db_ferrai",
+  "database": "db_ferrari",
   "synchronize": true,
   "logging": false,
   "entities": [
@@ -16,9 +16,9 @@
   "subscribers": [
     "typeorm/subscriber/**/*.ts"
   ],
-  "cli":{
+  "cli": {
     "entitiesDir": "typeorm/entity",
-    "migrationsDir": "typeorm/migration",
+    "migrationsDir": "./typeorm/migration",
     "subscribersDir": "typeorm/subscriber"
   }
 }
