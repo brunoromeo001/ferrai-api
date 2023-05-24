@@ -3,12 +3,12 @@ https://docs.nestjs.com/controllers#controllers
 */
 
 import { Controller, Post, Body, BadRequestException, Req, Get, Headers, UseGuards, Put, UseInterceptors, UploadedFile, Res, StreamableFile } from '@nestjs/common';
-import { UserService } from 'src/user/user.service';
+import { UserService } from '../user/user.service';
 import { parse } from 'date-fns';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { Auth } from './auth.decorator';
-import { User } from 'src/user/user.decorator';
+import { User } from '../user/user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('auth')

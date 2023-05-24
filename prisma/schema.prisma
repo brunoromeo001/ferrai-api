@@ -53,3 +53,14 @@ model PasswordRecovery {
   @@index([userId], map: "FK_password_recoveries_users")
   @@map("password_recoveries")
 }
+
+model Service{
+  id            Int       @id @default(autoincrement())
+  name          String    @db.VarChar(45)
+  description   String    @db.MediumText
+  price         Decimal   @db.Decimal( 10, 2)
+  createdAt     DateTime  @default(now()) @db.DateTime(0)
+  updatedAt     DateTime  @default(now()) @db.DateTime(0)
+
+  @@map("services")
+}

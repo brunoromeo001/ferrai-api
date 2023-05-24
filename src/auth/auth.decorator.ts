@@ -9,7 +9,7 @@ export const Auth = createParamDecorator(
     const request = ctx.switchToHttp().getRequest();
 
     if (field){
-      
+
       if(request.auth[field]){
         return request.auth[field];
       }else{
@@ -17,6 +17,6 @@ export const Auth = createParamDecorator(
       }
     }else{
       return request.auth
-    }    
+    }
   },
 );

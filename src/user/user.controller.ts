@@ -12,13 +12,13 @@ export class UserController {
 
   @Get(':id')
   async show(@Param('id') id){
-    
+
     return this.userService.get(id);
   }
 
   @Get()
   async showByEmail(@Query('email') email){
-    
+
     return this.userService.getByEmail(email);
   }
 
@@ -27,7 +27,7 @@ export class UserController {
     @Param('id') id,
     @Body() body
   ) {
-        
+
     return this.userService.update(id, body);
   }
 }
