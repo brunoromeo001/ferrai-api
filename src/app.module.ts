@@ -5,7 +5,14 @@ import { PrismaModule } from './prisma/prisma.module';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { ServicesModule } from './services/services.module';
-import { ContactModule } from './contact/contact/contact.module';
+import { ContactsModule } from './contacts/contacts.module';
+import { TimeOptionsService } from './time-options/time-options.service';
+import { TimeOptionsController } from './time-options/time-options.controller';
+import { TimeOptionsModule } from './time-options/time-options.module';
+import { ServiceModule } from './time-options/service/service.module';
+import { ControllerModule } from './time-options/controller/controller.module';
+import { ModuleModule } from './time-options/module/module.module';
+import { TimeOptionsModule } from './time-options/time-options.module';
 
 @Module({
   imports: [
@@ -14,10 +21,14 @@ import { ContactModule } from './contact/contact/contact.module';
     UserModule,
     PrismaModule,
     ServicesModule,
-    ContactModule,
+    ContactsModule,
+    TimeOptionsModule,
+    ServiceModule,
+    ControllerModule,
+    ModuleModule,
   ],
-  controllers: [AppController],
-  providers: [],
+  controllers: [AppController, TimeOptionsController],
+  providers: [TimeOptionsService],
   exports: [ServicesModule],
 })
 export class AppModule { }
