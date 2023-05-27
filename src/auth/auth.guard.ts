@@ -1,39 +1,47 @@
-/*
-https://docs.nestjs.com/guards#guards
-*/
-
-import { Injectable, CanActivate, ExecutionContext, BadRequestException } from '@nestjs/common';
-import { Observable } from 'rxjs';
-import { AuthService } from './auth.service';
-import { UserService } from 'src/user/user.service';
+import {
+  Injectable,
+  CanActivate,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { PrismaService } from '../prisma/prisma.service';
+import { AuthType } from './auth.type';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private userService: UserService) {};
+  constructor(
+      private prisma: PrismaService,
+      private jwtService: JwtService,
+  ) {}
 
-  async canActivate(
-    context: ExecutionContext,
-  ): Promise<boolean>  {
-
-    try{
-
+  async canActivate(context: ExecutionContext): Promise<boolean> {
       const request = context.switchToHttp().getRequest();
-      const authorization = request.headers['authorization'];
-      const token = authorization.split(' ')[1];
+      const Authorization = request.headers['authorization'];
 
-      if(!token) {
-
-        throw new BadRequestException("Token is required");
+      if (!Authorization) {
+          throw new UnauthorizedException('Authorization token required.');
       }
 
-      request.auth = await this.authService.decodeToken(token);
+      try {
+          const token = Authorization.split(' ')[1];
 
-      request.user = await this.userService.get(request.auth.id);
+          this.jwtService.verify(token);
 
-    } catch(e){
-      return false;
-    }
+          request.auth = this.jwtService.decode(token) as AuthType;
 
-    return true;
+          request.user = await this.prisma.user.findFirst({
+              where: { id: request.auth.id },
+              include: { person: true },
+          });
+
+          if (!request.user) {
+              throw new UnauthorizedException('User not found.');
+          }
+
+          return true;
+      } catch (e) {
+          throw new UnauthorizedException(e.message);
+      }
   }
 }

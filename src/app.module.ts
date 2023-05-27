@@ -9,10 +9,8 @@ import { ContactsModule } from './contacts/contacts.module';
 import { TimeOptionsService } from './time-options/time-options.service';
 import { TimeOptionsController } from './time-options/time-options.controller';
 import { TimeOptionsModule } from './time-options/time-options.module';
-import { ServiceModule } from './time-options/service/service.module';
-import { ControllerModule } from './time-options/controller/controller.module';
-import { ModuleModule } from './time-options/module/module.module';
-import { TimeOptionsModule } from './time-options/time-options.module';
+import { AddressesModule } from './addresses/addresses.module';
+
 
 @Module({
   imports: [
@@ -23,9 +21,7 @@ import { TimeOptionsModule } from './time-options/time-options.module';
     ServicesModule,
     ContactsModule,
     TimeOptionsModule,
-    ServiceModule,
-    ControllerModule,
-    ModuleModule,
+    AddressesModule
   ],
   controllers: [AppController, TimeOptionsController],
   providers: [TimeOptionsService],
